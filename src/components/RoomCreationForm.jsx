@@ -13,6 +13,11 @@ const TEAM_COLORS = [
   { name: 'כחול', color: 'bg-blue-500', value: 'blue' },
   { name: 'ירוק', color: 'bg-green-500', value: 'green' },
   { name: 'צהוב', color: 'bg-yellow-500', value: 'yellow' },
+  { name: 'סגול', color: 'bg-purple-500', value: 'purple' },
+  { name: 'כתום', color: 'bg-orange-500', value: 'orange' },
+  { name: 'ורוד', color: 'bg-pink-500', value: 'pink' },
+  { name: 'טורקיז', color: 'bg-teal-500', value: 'teal' },
+  { name: 'אפור', color: 'bg-gray-500', value: 'gray' },
 ];
 
 const RoomCreationForm = ({ onSubmit }) => {
@@ -104,15 +109,15 @@ const RoomCreationForm = ({ onSubmit }) => {
   };
 
   return (
-    <div className="p-6 max-w-xl mx-auto bg-white rounded-xl shadow-2xl space-y-6 border border-gray-100 **rtl**">
-      <h2 className="text-3xl font-bold text-gray-800 border-b pb-3 mb-4 text-center">
-        יצירת חדר חדש 🚪
+    <div className="p-6 max-w-xl mx-auto bg-white-200 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 rounded-xl shadow-2xl space-y-6 border border-gray-100 dark:border-gray-700 rtl">
+      <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-200 border-b pb-3 mb-4 text-center">
+        יצירת חדר חדש 
       </h2>
       <form onSubmit={handleSubmit} className="space-y-6">
 
         {/* --- 1. Room Name --- */}
         <div>
-          <label htmlFor="room-name" className="block text-lg font-medium text-gray-700 mb-1">
+          <label htmlFor="room-name" className="block text-lg font-medium mb-1">
             שם החדר
           </label>
           <input
@@ -122,18 +127,18 @@ const RoomCreationForm = ({ onSubmit }) => {
             value={roomSettings.name}
             onChange={handleInputChange}
             required
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 text-right"
+            className="w-full px-4 py-2 border border-gray-300 dark:bg-gray-700 rounded-lg focus:ring-blue-500 focus:border-blue-500 text-right"
           />
         </div>
 
         {/* --- 2. Word Source Selection --- */}
-        <fieldset className="border p-4 rounded-lg space-y-3">
-          <legend className="text-lg font-medium text-gray-700 px-2">
+        <fieldset className="border p-4 rounded-lg space-y-3 dark:text-gray-200">
+          <legend className="text-lg font-medium text-gray-700 dark:text-gray-200 px-2">
             בחירת מקור מילים
           </legend>
 
           {/* Vocabulary Option */}
-          <div className="flex items-center space-x-3 **space-x-reverse**">
+          <div className="flex items-center space-x-3">
             <input
               id="source-vocab"
               type="radio"
@@ -141,9 +146,9 @@ const RoomCreationForm = ({ onSubmit }) => {
               value="vocabulary"
               checked={roomSettings.wordSource === 'vocabulary'}
               onChange={handleWordSourceChange}
-              className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+              className="h-4 w-4 text-blue-600 border-gray-300 dark:border-gray-800 focus:ring-blue-500"
             />
-            <label htmlFor="source-vocab" className="text-base text-gray-700">
+            <label htmlFor="source-vocab" className="text-base text-gray-700 dark:text-gray-200">
               שימוש באוצר מילים קיים
             </label>
           </div>
@@ -152,7 +157,7 @@ const RoomCreationForm = ({ onSubmit }) => {
               name="selectedVocabularyId"
               value={roomSettings.selectedVocabularyId}
               onChange={handleInputChange}
-              className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 text-right"
+              className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 dark:bg-gray-700 focus:ring-blue-500 focus:border-blue-500 dark:focus:border-blue-100 text-right"
             >
               {FAKE_VOCABULARIES.map(vocab => (
                 <option key={vocab.id} value={vocab.id}>
@@ -163,7 +168,7 @@ const RoomCreationForm = ({ onSubmit }) => {
           )}
 
           {/* Custom Words Option */}
-          <div className="flex items-center pt-2 space-x-3 **space-x-reverse**">
+          <div className="flex items-center pt-2 space-x-3">
             <input
               id="source-custom"
               type="radio"
@@ -173,7 +178,7 @@ const RoomCreationForm = ({ onSubmit }) => {
               onChange={handleWordSourceChange}
               className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
             />
-            <label htmlFor="source-custom" className="text-base text-gray-700">
+            <label htmlFor="source-custom" className="text-base text-gray-700 dark:text-gray-200">
               שימוש ברשימת מילים משלי
             </label>
           </div>
@@ -184,15 +189,15 @@ const RoomCreationForm = ({ onSubmit }) => {
               onChange={handleInputChange}
               placeholder="הכנס מילים, מופרדות בפסיקים (לדוגמה: תפוח, בננה, לימון)"
               rows="3"
-              className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 resize-none text-right"
+              className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 dark:bg-gray-700 focus:ring-blue-500 focus:border-blue-500 resize-none text-right"
             ></textarea>
           )}
         </fieldset>
         
         {/* --- 3. Players Management --- */}
         <fieldset className="border p-4 rounded-lg space-y-4">
-          <legend className="text-lg font-medium text-gray-700 px-2">
-            שחקנים (סה"כ: {roomSettings.players.length}) 🧑‍🤝‍🧑
+          <legend className="text-lg font-medium text-gray-700 dark:text-gray-200 px-2">
+            שחקנים (סה"כ: {roomSettings.players.length})
           </legend>
 
           {/* List of Current Players */}
@@ -200,21 +205,21 @@ const RoomCreationForm = ({ onSubmit }) => {
             {roomSettings.players.map((player) => (
               <li
                 key={player.id}
-                className="flex items-center justify-between p-2 bg-gray-50 border rounded-lg"
+                className="flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-700 border rounded-lg"
                 dir="rtl" // Ensure inner list items follow RTL
               >
-                <div className="flex-grow space-x-3 **space-x-reverse** items-center flex">
+                <div className="flex-grow space-x-3 space-x-reverse items-center flex">
                     <input
                         type="text"
                         value={player.name}
                         onChange={(e) => handlePlayerDetailChange(player.id, 'name', e.target.value)}
-                        className="py-1 px-2 border rounded-md text-right flex-grow max-w-xs"
+                        className="py-1 px-2 border rounded-md text-right dark:bg-gray-800 flex-grow max-w-xs"
                     />
 
                     <select
                         value={player.teamColor}
                         onChange={(e) => handlePlayerDetailChange(player.id, 'teamColor', e.target.value)}
-                        className="py-1 px-2 border rounded-md bg-white text-right max-w-[150px]"
+                        className="py-1 px-2 border rounded-md bg-white dark:bg-gray-800 text-right max-w-[150px]"
                     >
                         {TEAM_COLORS.map((color) => (
                             <option key={color.value} value={color.value}>
@@ -239,43 +244,42 @@ const RoomCreationForm = ({ onSubmit }) => {
           
           <hr className="my-4" />
 
-          {/* Add Player Controls */}
-          <div className="flex flex-col sm:flex-row gap-2 items-center">
-            <input
-              type="text"
-              placeholder="שם שחקן חדש"
-              value={newPlayerName}
-              onChange={(e) => setNewPlayerName(e.target.value)}
-              className="w-full sm:w-1/2 px-3 py-2 border border-gray-300 rounded-lg text-right"
-            />
-            <select
-              value={newPlayerColor}
-              onChange={(e) => setNewPlayerColor(e.target.value)}
-              className="w-full sm:w-auto px-3 py-2 border border-gray-300 rounded-lg bg-white text-right"
-            >
-              {TEAM_COLORS.map((color) => (
-                <option key={`new-${color.value}`} value={color.value}>
-                  {color.name}
-                </option>
-              ))}
-            </select>
-            <button
-              type="button"
-              onClick={addPlayer}
-              className="w-full sm:w-auto px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-150 flex-shrink-0"
-              disabled={newPlayerName.trim() === ''}
-            >
-              ➕ הוסף שחקן
-            </button>
-          </div>
-        </fieldset>
+                <div className="flex flex-col sm:flex-row gap-2 items-center">
+                <input
+                  type="text"
+                  placeholder="שם שחקן חדש"
+                  value={newPlayerName}
+                  onChange={(e) => setNewPlayerName(e.target.value)}
+                  className="w-full sm:w-1/2 px-3 py-2 border dark:bg-gray-700 border-gray-300 dark:border-gray-800 rounded-lg text-right"
+                />
+                <select
+                  value={newPlayerColor}
+                  onChange={(e) => setNewPlayerColor(e.target.value)}
+                  className="w-full sm:w-auto px-3 py-2 border dark:bg-gray-700  border-gray-300 rounded-lg bg-white text-right"
+                >
+                  {TEAM_COLORS.map((color) => (
+                  <option key={`new-${color.value}`} value={color.value}>
+                    {color.name}
+                  </option>
+                  ))}
+                </select>
+                <button
+                  type="button"
+                  onClick={addPlayer}
+                  className="w-full sm:w-auto sm:flex-1 px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-150 flex-shrink-0"
+                  disabled={newPlayerName.trim() === ''}
+                >
+                  הוסף שחקן
+                </button>
+                </div>
+              </fieldset>
 
-        {/* --- 4. Submit Button --- */}
+              {/* --- 4. Submit Button --- */}
         <button
           type="submit"
           className="w-full py-3 bg-green-600 text-white text-xl font-bold rounded-xl hover:bg-green-700 transition duration-200 shadow-md"
         >
-          צור חדר והתחל! 🚀
+          צור חדר והתחל
         </button>
       </form>
     </div>
