@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { fetchVocabularies, createRoom } from '../api/backendUtilities.js'; // Import the function
-import { use } from 'react';
+
+//TODO: Replace FAKE_VOCABULARIES with real API call results
+//TODO: Add local Storage caching for user-entered vocabulary lists
 
 // Faking the vocabulary list options
 const FAKE_VOCABULARIES = [
