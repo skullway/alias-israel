@@ -1,0 +1,28 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "dictionaryDefinitions": [
+    {
+      "name": "hebrew",
+      "path": "node_modules/@cspell/dict-he/he.trie.gz"
+    }
+  ],
+  "dictionaries": [
+    "hebrew"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@cspell/dict-he": "^4.0.5",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0"
+  }
+}
