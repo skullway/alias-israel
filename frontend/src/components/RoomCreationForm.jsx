@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { fetchVocabularies, createRoom } from '../api/backendUtilities.js'; // Import the function
+import { use } from 'react';
 
 // Faking the vocabulary list options
 const FAKE_VOCABULARIES = [
@@ -35,6 +37,19 @@ const RoomCreationForm = ({ onSubmit }) => {
   // State for the new player form inputs (to manage adding players)
   const [newPlayerName, setNewPlayerName] = useState('');
   const [newPlayerColor, setNewPlayerColor] = useState(TEAM_COLORS[1].value);
+
+  useEffect(() => {
+    // Fetch vocabularies from backend when component mounts
+    const loadVocabularies = async () => {
+      try {
+        const data = await fetchVocabularies(); // Clean call
+        setAvailableVocabularies(data);
+        // ... (rest of logic) ...
+      } catch (error) {
+          console.error("Failed to load vocabularies:", error);
+      }
+    }
+  },[]);
 
   // --- Handlers for Form Changes ---
 
@@ -92,7 +107,7 @@ const RoomCreationForm = ({ onSubmit }) => {
 
   // --- Handler for Final Submission ---
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Final clean-up and packaging of data
@@ -103,6 +118,14 @@ const RoomCreationForm = ({ onSubmit }) => {
         ? roomSettings.customWords.split(',').map(word => word.trim()).filter(word => word.length > 0)
         : null, // or undefined, or the ID of the selected vocabulary
     };
+
+    try {
+        const result = await createRoom(finalRoomData); // Clean call
+        // ...
+    } catch (error) {
+        console.error("Failed to create room:", error);
+        alert("שגיאה ביצירת החדר. אנא נסה שוב.");
+    }
 
     // Call the parent function with the neatly packed object
     onSubmit(finalRoomData);
