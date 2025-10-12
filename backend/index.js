@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const cors = require('cors'); // Essential for local development
+const cors = require('cors');
+const path = require('path');
 const app = express();
 
 dotenv.config();
@@ -17,6 +18,17 @@ app.use(express.json()); // To parse JSON request bodies
 // Simple test route
 app.get('/api/test', (req, res) => {
     res.json({ message: 'Hello from the Hebrew Room Backend!' });
+});
+
+// Serve the compressed dictionary file
+app.get('/api/hebrew-trie', (req, res) => {
+    const filePath = path.join(__dirname, 'node_modules', '@cspell', 'dict-he', 'he.trie.gz');
+    res.sendFile(filePath, (err) => {
+        if (err) {
+            console.error('Error sending file:', err);
+            res.status(500).send('Failed to send file');
+        }
+    });
 });
 
 // Room Creation Endpoint (This is where you'd receive the object)

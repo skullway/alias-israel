@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { fetchVocabularies, createRoom } from '../api/backendUtilities.js'; // Import the function
+import { fetchVocabularies, createRoom, fetchAndDecompressTrie } from '../api/backendUtilities.js';
+import GameStart from './GameStart'; // Import GameStart component
 
 //TODO: Replace FAKE_VOCABULARIES with real API call results
 //TODO: Add local Storage caching for user-entered vocabulary lists
@@ -39,6 +40,11 @@ const RoomCreationForm = ({ onSubmit }) => {
   // State for the new player form inputs (to manage adding players)
   const [newPlayerName, setNewPlayerName] = useState('');
   const [newPlayerColor, setNewPlayerColor] = useState(TEAM_COLORS[1].value);
+
+  // State to track if the room is created
+  const [roomCreated, setRoomCreated] = useState(false);
+  // State to store room data
+  const [roomData, setRoomData] = useState(null);
 
   useEffect(() => {
     // Fetch vocabularies from backend when component mounts
@@ -123,7 +129,8 @@ const RoomCreationForm = ({ onSubmit }) => {
 
     try {
         const result = await createRoom(finalRoomData); // Clean call
-        // ...
+        setRoomData(finalRoomData); // Save room data
+        setRoomCreated(true); // Mark room as created
     } catch (error) {
         console.error("Failed to create room:", error);
         alert("שגיאה ביצירת החדר. אנא נסה שוב.");
@@ -132,6 +139,28 @@ const RoomCreationForm = ({ onSubmit }) => {
     // Call the parent function with the neatly packed object
     onSubmit(finalRoomData);
   };
+
+  const handleStartGame = async () => {
+
+    const dictionaryWordsList = await fetchAndDecompressTrie('/api/hebrew-trie');
+    console.log("Decompressed Dictionary Words List:", dictionaryWordsList);
+    
+    alert('המשחק מתחיל!');
+  };
+
+  const handleCloseRoom = () => {
+    setRoomCreated(false);
+  };
+
+  if (roomCreated) {
+    return (
+      <GameStart
+        roomData={roomData}
+        onStartGame={handleStartGame}
+        onCloseRoom={handleCloseRoom}
+      />
+    );
+  }
 
   return (
     <div className="p-6 max-w-xl mx-auto bg-white-200 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 rounded-xl shadow-2xl space-y-6 border border-gray-100 dark:border-gray-700 rtl">
