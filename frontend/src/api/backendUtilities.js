@@ -1,5 +1,7 @@
 import pako from 'pako';
-import * as TrieLib from 'cspell-trie-lib';
+import * as cspellTrieLib from 'cspell-trie-lib';
+const  {walker, parseDictionary, decodeTrie } = cspellTrieLib; 
+
 
 const API_BASE_URL = '/api'; // Uses the Vite proxy in development
 
@@ -58,23 +60,18 @@ export const fetchAndDecompressTrie = async (url) => {
     // Convert to string (if it's text-based)
     // const trieString = new TextDecoder('utf-8').decode(decompressedData);
     // Try the original static method first (as a property of the object)
-    if (TrieLib.Trie && TrieLib.Trie.deserialize) {
-        wordTrie = TrieLib.Trie.deserialize(decompressedData); 
-    } 
-    // If that fails, try the standalone named function
-    else if (TrieLib.deserializeTrie) {
-        wordTrie = TrieLib.deserializeTrie(decompressedData); 
-    } 
-    // Fallback: Check if the 'default' export is actually the library object
-    else if (TrieLib.default && TrieLib.default.Trie && TrieLib.default.Trie.deserialize) {
-        wordTrie = TrieLib.default.Trie.deserialize(decompressedData);
-    }
-    else {
-        throw new Error("Could not find a working 'deserialize' function in cspell-trie-lib.");
-    }
-    // // Parse JSON (if applicable)
-    // const trieData = JSON.parse(trieString);
+     const trie = decodeTrie(decompressedData);
+     console.log(trie)
+     console.log(cspellTrieLib);
+
+         // 3. Walk the trie to extract all words
+    // const allWords = [...walker.words(trie)];
     
 
-  return wordTrie;
+    // // Parse JSON (if applicable)
+    // const trieData = JSON.parse(trieString);
+    // console.log("ALL WORDS" , allWords);
+    
+
+  return decompressedData;
 }
