@@ -20,7 +20,7 @@ app.get('/api/test', (req, res) => {
     res.json({ message: 'Hello from the Hebrew Room Backend!' });
 });
 
-// Serve the compressed dictionary file
+// Serve the compressed full dictionary file
 app.get('/api/hebrew-trie', (req, res) => {
     const filePath = path.join(__dirname, 'node_modules', '@cspell', 'dict-he', 'he.trie.gz');
     res.sendFile(filePath, (err) => {
@@ -30,6 +30,18 @@ app.get('/api/hebrew-trie', (req, res) => {
         }
     });
 });
+
+// Serve the compressed nouns file
+app.get('/api/nouns-list', (req, res) => {
+    const filePath = path.join(__dirname, 'data', 'nouns_hebrew.json.gz');
+    res.sendFile(filePath, (err) => {
+        if (err) {
+            console.error('Error sending file:', err);
+            res.status(500).send('Failed to send file');
+        }
+    });
+});
+
 
 // Room Creation Endpoint (This is where you'd receive the object)
 app.post('/api/rooms', (req, res) => {

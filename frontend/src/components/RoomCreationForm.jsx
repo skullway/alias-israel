@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchVocabularies, createRoom, fetchAndDecompressTrie } from '../api/backendUtilities.js';
+import { fetchVocabularies, createRoom, fetchAndDecompressTrie, trieGetRandomWords, getRandomWordsFromJSON, fetchAndDecompressGzipJSON } from '../api/backendUtilities.js';
 import GameStart from './GameStart'; // Import GameStart component
 
 //TODO: Replace FAKE_VOCABULARIES with real API call results
@@ -142,8 +142,12 @@ const RoomCreationForm = ({ onSubmit }) => {
 
   const handleStartGame = async () => {
 
-    const dictionaryWordsList = await fetchAndDecompressTrie('/api/hebrew-trie');
-    console.log("Decompressed Dictionary Words List:", dictionaryWordsList);
+    const nounsList = await fetchAndDecompressGzipJSON('/api/nouns-list');
+    // const dictionaryWordsList = await fetchAndDecompressTrie('/api/hebrew-trie');
+    // const gameWords = trieGetRandomWords(dictionaryWordsList);
+    console.log(getRandomWordsFromJSON(10 ,nounsList));
+    // console.log("Decompressed Dictionary Words Randomized: ", gameWords);
+
     
     alert('המשחק מתחיל!');
   };
