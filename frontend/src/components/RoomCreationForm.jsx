@@ -181,10 +181,9 @@ const RoomCreationForm = ({ onSubmit }) => {
     );
   }
 
-  // Wrap the form in a container with RTL styling
   return (
     <div className="p-6 max-w-xl mx-auto bg-white-200 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 rounded-xl shadow-2xl space-y-6 border border-gray-100 dark:border-gray-700 rtl" dir="rtl">
-      <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-200 border-b pb-3 mb-4 text-center">
+      <h2 className="text-3xl font-medium text-gray-800 dark:text-gray-200 border-b pb-3 mb-4 text-center">
         יצירת חדר חדש 
       </h2>
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -371,7 +370,7 @@ const RoomCreationForm = ({ onSubmit }) => {
               {/* --- 4. Submit Button --- */}
         <button
           type="submit"
-          className="w-full py-3 bg-green-600 text-white text-xl font-bold rounded-xl hover:bg-green-700 transition duration-200 shadow-md"
+          className="w-full py-3 bg-green-600 text-white text-xl font-semibold rounded-xl hover:bg-green-700 transition duration-200 shadow-md"
         >
           צור חדר והתחל
         </button>
