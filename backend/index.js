@@ -82,7 +82,36 @@ app.post('/api/rooms', (req, res) => {
 });
 // --- END: MODIFIED ---
 
-// TODO: Add a '/api/rooms/join' endpoint here later
+// Join Room Endpoint
+app.post('/api/rooms/join', (req, res) => {
+    const { roomCode, name } = req.body;
+
+    if (!roomCode || !name) {
+        return res.status(400).json({ error: 'Room code and user name are required.' });
+    }
+    // console.log("$$$$$$$$$$$$$$$$$", activeRooms.keys().next());
+    const room = activeRooms.get(roomCode);
+
+    if (!room) {
+        console.log(`Room with code ${roomCode} not found.`);
+        return res.status(404).json({ error: 'Room not found.' });
+    }
+
+    // Add the user to the room's players list
+    if (!room.players) {
+        room.players = [];
+    }
+
+    room.players.push({ name: name, joinedAt: new Date() });
+
+    console.log(`User ${name} joined room ${roomCode}`);
+
+    // Notify the client with the updated room data
+    res.status(200).json({
+        code: roomCode,
+        players: room.players,
+    }); // Explicitly include 'code' and 'players' in the response
+});
 
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
