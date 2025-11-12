@@ -10,9 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "cspell-trie-lib": "^9.2.1",
     "lucide-react": "^0.544.0",
+    "pako": "^2.1.0",
+    "prop-types": "^15.8.1",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "trie-prefix-tree": "^1.5.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
